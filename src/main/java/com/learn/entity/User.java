@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
-import com.sun.istack.NotNull;
 
 @Entity
 @Table
@@ -15,10 +14,10 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
+
 	@Email
 	private String email;
-	@NotNull
+
 	private String password;
 	
 	public Long getId() {

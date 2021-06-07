@@ -6,7 +6,7 @@ import com.learn.dto.StudentDto;
 import com.learn.entity.Student;
 
 public interface StudentService {
-	public void addStudent(Student student);
+	public void addStudent(StudentDto studentDto);
 	
 	public List<StudentDto> viewStudent();
 	
@@ -17,4 +17,7 @@ public interface StudentService {
 	public List<Student> getByName(String firstname);
 	
 	public Student getByFirstName(String firstname);
+	
+	public List<Student> getStudentsByCourse(Long courseId);
+	
 }

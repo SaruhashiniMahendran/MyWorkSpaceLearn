@@ -1,11 +1,14 @@
 package com.learn.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import com.learn.dto.StudentDto;
 import com.learn.entity.Student;
@@ -18,12 +21,18 @@ public class StudentServiceImpl implements StudentService{
 	
 	@Autowired
 	ModelMapper modelmapper;
+	
+//	@Autowired
+//	private CourseService courseService;
 
 	@Override
-	public void addStudent(Student student) {
+	public void addStudent(StudentDto studentDto) {
+		Student student = modelmapper.map(studentDto, Student.class);
+//		student.setCourse(courseService.getCourse(studentDto.getCourseId()));
+		student.setFullName(studentDto.getFirstName()+ " "+ studentDto.getLastName());
 		studentRepository.save(student);
 	}
-
+	
 	@Override
 	public List<StudentDto> viewStudent() {
 		List<Student> students = studentRepository.findAll();
@@ -57,4 +66,11 @@ public class StudentServiceImpl implements StudentService{
 		return (Student) studentRepository.findByFirstName(firstName);
 				
 	}
+	@Override
+	public List<Student>getStudentsByCourse(Long courseId){
+		List<Student> students = new ArrayList<>();
+		studentRepository.findByCourse(courseId).forEach(students::add);
+		return students;
+	}
+	
 }

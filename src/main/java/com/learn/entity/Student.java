@@ -4,10 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-@Table //(name="change name")
 public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +16,10 @@ public class Student {
 	private String firstName;
 	
 	private String lastName;
+	
+	@ManyToOne
+	@JoinColumn(name="course", nullable = false)
+	private Course course;
 	
 	private String fullName;
 	
@@ -47,6 +51,11 @@ public class Student {
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+	public Course getCourse() {
+		return course;
+	}
+	public void setCourse(Course course) {
+		this.course = course;
+	}	
 	
-
 }

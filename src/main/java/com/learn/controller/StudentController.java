@@ -30,12 +30,11 @@ public class StudentController {
 	@Autowired
 	ModelMapper modelmapper;
 	
+	
+	
 	@PostMapping(value="/add")
 	public ResponseEntity<Object>addStudent(@Valid @RequestBody StudentDto studentDto){
-		Student student = modelmapper.map(studentDto, Student.class);
-		student.setFullName(studentDto.getFirstName()+ " "+ studentDto.getLastName());
-//	System.out.println(studentDto.getFullName());
-		studentService.addStudent(student);
+		studentService.addStudent(studentDto);
 		return new ResponseEntity<Object>("successfully entered Student",HttpStatus.CREATED);
 	}
 	
@@ -70,4 +69,10 @@ public class StudentController {
 	public ResponseEntity<?> getByFirstName(@PathVariable String name){
 		return new ResponseEntity<>(studentService.getByFirstName(name), HttpStatus.OK);
 	}
+	
+	@GetMapping("/course/{courseId}")
+	public List<Student> getAllStudents(@PathVariable Long courseId){
+		return studentService.getStudentsByCourse(courseId);
+	}
+	
 }
