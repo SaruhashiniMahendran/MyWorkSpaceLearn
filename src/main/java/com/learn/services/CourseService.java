@@ -3,17 +3,16 @@ package com.learn.services;
 import java.util.List;
 
 import com.learn.dto.CourseDto;
-import com.learn.entity.Course;
-
+import com.learn.dto.CourseRespDto;
 public interface CourseService {
 	
-	public void addCourse(Course course);
+	public void addCourse(CourseDto courseDto);
 	
-	public List<CourseDto> viewCourse();
+	public List<CourseRespDto> viewCourse();
 	
 	public void deleteCourse(Long id);
 	
-	public void updateCourse(Course course);
+	public void updateCourse(CourseDto courseDto);
 	
-	public Course getCourse(Long id);
+//	public Course getCourse(Long id);
 }

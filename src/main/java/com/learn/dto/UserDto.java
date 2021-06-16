@@ -4,6 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+
 public class UserDto {
 	private Long id;
 	@NotNull(message="Not be in Null")
@@ -14,6 +15,8 @@ public class UserDto {
 	@NotBlank(message="Not be in Blank")
 	@NotEmpty(message="Not be in Empty")
 	private String password;
+	
+	private Long studentId;
 	
 	public Long getId() {
 		return id;
@@ -33,4 +36,11 @@ public class UserDto {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public Long getStudentId() {
+		return studentId;
+	}
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
+	}
+	
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.learn.dto.StudentDto;
+import com.learn.dto.StudentRespDto;
 import com.learn.entity.Student;
 import com.learn.services.StudentService;
 
@@ -30,8 +31,6 @@ public class StudentController {
 	@Autowired
 	ModelMapper modelmapper;
 	
-	
-	
 	@PostMapping(value="/add")
 	public ResponseEntity<Object>addStudent(@Valid @RequestBody StudentDto studentDto){
 		studentService.addStudent(studentDto);
@@ -39,17 +38,14 @@ public class StudentController {
 	}
 	
 	@GetMapping(value="/view")
-	public ResponseEntity<List<StudentDto>> viewStudents(){
-		return new ResponseEntity<List<StudentDto>>(studentService.viewStudent(),HttpStatus.OK);
+	public ResponseEntity<List<StudentRespDto>> viewStudents(){
+		return new ResponseEntity<List<StudentRespDto>>(studentService.viewStudent(),HttpStatus.OK);
 	}
 	
-	@PutMapping(value="/update/{id}")
-	public ResponseEntity<Object> updateStudent(@Valid @RequestBody StudentDto studentDto, @PathVariable("id") Long id ){
-//		Student s1 = StudentConverter.stuDtoToStuEntity(studentDto);
-		Student st = modelmapper.map(studentDto, Student.class);
-		st.setId(id);
-		st.setFullName(studentDto.getFirstName()+ " "+ studentDto.getLastName());
-		studentService.updateStudent(st);
+	//@PathVariable("id") Long id
+	@PutMapping(value="/update")
+	public ResponseEntity<Object> updateStudent(@Valid @RequestBody StudentDto studentDto ){
+		studentService.updateStudent(studentDto);
 		return new ResponseEntity<Object>("successfully updated student",HttpStatus.OK);
 	}
 	
@@ -59,10 +55,9 @@ public class StudentController {
 		return new ResponseEntity<String>("Successfully deteted student",HttpStatus.OK);
 	}
 	
-	
 	@GetMapping("/lastname/{name}")
 	public ResponseEntity<?> getByLastName(@PathVariable String name){
-		return new ResponseEntity<>(studentService.getByName(name), HttpStatus.OK);
+		return new ResponseEntity<>(studentService.getByLastName(name), HttpStatus.OK);
 	}
 	
 	@GetMapping("/firstname/{name}")

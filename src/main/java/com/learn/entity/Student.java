@@ -6,7 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 @Entity
 public class Student {
 	@Id
@@ -51,11 +50,5 @@ public class Student {
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
-	public Course getCourse() {
-		return course;
-	}
-	public void setCourse(Course course) {
-		this.course = course;
-	}	
 	
 }

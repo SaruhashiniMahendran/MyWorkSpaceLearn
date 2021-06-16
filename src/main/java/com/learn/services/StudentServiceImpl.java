@@ -9,8 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.learn.dto.StudentDto;
+import com.learn.dto.StudentRespDto;
 import com.learn.entity.Student;
 import com.learn.repositories.StudentRepository;
 
@@ -22,9 +22,6 @@ public class StudentServiceImpl implements StudentService{
 	@Autowired
 	ModelMapper modelmapper;
 	
-//	@Autowired
-//	private CourseService courseService;
-
 	@Override
 	public void addStudent(StudentDto studentDto) {
 		Student student = modelmapper.map(studentDto, Student.class);
@@ -34,42 +31,43 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	@Override
-	public List<StudentDto> viewStudent() {
+	public List<StudentRespDto> viewStudent() {
 		List<Student> students = studentRepository.findAll();
 		return students.stream().map(this::convertToDtods).collect(Collectors.toList());
 	}
 	
-	private StudentDto convertToDtods(Student student) {
-		StudentDto studentDto = modelmapper.map(student, StudentDto.class);
-		return studentDto;
+	private StudentRespDto convertToDtods(Student student) {
+		StudentRespDto studentRespDto = modelmapper.map(student, StudentRespDto.class);
+		return studentRespDto;
 	}
-
+	
 	@Override
-	public void updateStudent(Student student) {
-		studentRepository.save(student);
+	public void updateStudent(StudentDto studentDto) {
+		Student st = modelmapper.map(studentDto, Student.class);
+		st.setFullName(studentDto.getFirstName()+ " "+ studentDto.getLastName());
+		studentRepository.save(st);
 	}
 	
 	@Override
 	public void deleteStudent(Long id) {
 		studentRepository.deleteById(id);
 	}
-
+	
 	@Override
-	public List<Student> getByName(String name) {
-		studentRepository.findByFirstName(name);
-		return studentRepository.findAll();		
+	public List<Student> getByLastName(String lastName) {
+		return (List<Student>) studentRepository.findByLastName(lastName);
 	}
 	
 	@Override
-	public Student getByFirstName(String firstName) {
-		studentRepository.findByFirstName(firstName);
-		return (Student) studentRepository.findByFirstName(firstName);
-				
+	public List<Student> getByFirstName(String firstName) {
+//		studentRepository.findByFirstName(firstName);
+		return (List<Student>) studentRepository.findByFirstName(firstName);		
 	}
+	
 	@Override
-	public List<Student>getStudentsByCourse(Long courseId){
+	public List<Student> getStudentsByCourse(Long courseId){
 		List<Student> students = new ArrayList<>();
-		studentRepository.findByCourse(courseId).forEach(students::add);
+		studentRepository.findByCourseId(courseId).forEach(students::add);
 		return students;
 	}
 	
